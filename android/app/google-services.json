@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "998423722324",
+    "firebase_url": "https://nofomo-da166.firebaseio.com",
+    "project_id": "nofomo-da166",
+    "storage_bucket": "nofomo-da166.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998423722324:android:435fafb140af5d07a370c1",
+        "android_client_info": {
+          "package_name": "com.adilwoes.nofomo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "998423722324-h98den8sn9v5hsv1pbuq2ni0p2q6msnu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxhVxe5B0C0s-FOJ2Teanw4qkWXFiG8QI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998423722324-h98den8sn9v5hsv1pbuq2ni0p2q6msnu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
