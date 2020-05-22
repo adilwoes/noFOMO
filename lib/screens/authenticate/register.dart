@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nofomo/services/auth.dart';
 import 'package:nofomo/shared/constants.dart';
-import 'package:nofomo/shared/constants.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
