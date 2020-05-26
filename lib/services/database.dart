@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nofomo/models/nofomo.dart';
-import 'package:nofomo/models/nofomo.dart';
 
 class DatabaseService {
   final String uid;
