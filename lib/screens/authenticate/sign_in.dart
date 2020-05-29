@@ -172,14 +172,19 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
                 SizedBox(
-                  height: 12.0,
-                ),
-                Text(
-                  error,
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 14.0,
-                    fontFamily: 'Montserrat',
+                  height: 20.0,
+                ), //creates the separation between login button and error msg
+                SizedBox(
+                  height: 20.0,
+                  child: Center(
+                    child: Text(
+                      error,
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 14.0,
+                        fontFamily: 'Montserrat',
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 20.0),

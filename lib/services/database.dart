@@ -1,34 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nofomo/models/nofomo.dart';
+import 'package:nofomo/models/userdata.dart';
 
 class DatabaseService {
   final String uid;
-  DatabaseService({this.uid});
+  DatabaseService({ this.uid });
 
   //collection reference
-  final CollectionReference noFomoCollection =
-      Firestore.instance.collection('nofomo');
+  final CollectionReference userCollection =
+      Firestore.instance.collection('user data');
 
-  Future updateUserData(String name, int phoneNumber) async {
-    return await noFomoCollection.document(uid).setData({
+  Future updateUserData(String name, int phoneNumber, String email) async { //when users register and when they update in settings
+    return await userCollection.document(uid).setData({ //creates the document and links the user to it
       'name': name,
-      'phoneNumber': phoneNumber,
+      //'phoneNumber': phoneNumber,
+      'email': email,
     });
   }
 
-  // nofomo list from snapshot
-  List<NoFomo> _nofomoListFromSnapshot(QuerySnapshot snapshot) {
+  // userData list from snapshot
+  List<UserData> _userDataListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return NoFomo(
+      return UserData(
         name: doc.data['name'] ?? '',
-        phoneNumber: doc.data['phoneNumber'] ?? null,
+        //phoneNumber: doc.data['phoneNumber'] ?? 0,
+        email: doc.data['email'] ?? '',
       );
     }).toList();
   }
 
-  //get noFomo stream
-  Stream<List<NoFomo>> get nofomo {
-    return noFomoCollection.snapshots()
-      .map(_nofomoListFromSnapshot);
+  //get userData stream
+  Stream<List<UserData>> get userData {
+    return userCollection.snapshots()
+      .map(_userDataListFromSnapshot);
   }
 }
