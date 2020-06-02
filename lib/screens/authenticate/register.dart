@@ -150,6 +150,7 @@ class _RegisterState extends State<Register> {
                             fontFamily: 'Montserrat',
                           ),
                         ),
+                        SizedBox(height: 12.0,),
                         SizedBox(
                           height: 0.0,
                         ),

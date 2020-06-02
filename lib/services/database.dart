@@ -9,13 +9,14 @@ class DatabaseService {
   final CollectionReference userCollection =
       Firestore.instance.collection('user data');
 
-  Future updateUserData(String name, int phoneNumber, String email) async { //when users register and when they update in settings
+  Future updateUserData(String name, String email) async { //when users register and when they update in settings
     return await userCollection.document(uid).setData({ //creates the document and links the user to it
       'name': name,
       //'phoneNumber': phoneNumber,
       'email': email,
     });
   }
+  //might have to put this part in settings instead of home screen
 
   // userData list from snapshot
   List<UserData> _userDataListFromSnapshot(QuerySnapshot snapshot) {
