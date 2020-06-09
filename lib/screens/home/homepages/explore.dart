@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:nofomo/widgets/fav.dart';
 import 'package:nofomo/widgets/nearby.dart';
 import 'package:nofomo/widgets/whatshot.dart';
 
 class Explore extends StatefulWidget {
-  Explore({Key key, this.title}) : super(key: key);
+  Explore({Key key}) : super(key: key);
 
-  final String title;
+  //final String title;
   @override
   _ExploreState createState() => _ExploreState();
 }
@@ -15,54 +16,25 @@ class _ExploreState extends State<Explore> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueGrey[50],
+      appBar: AppBar(
+        title: Center(
+          child: RichText(text: TextSpan(
+            style: TextStyle(
+              fontSize: 34.0,
+              fontFamily: 'Bebas',
+            ),
+            children: <TextSpan>[
+              TextSpan(text: 'No', style: TextStyle(color: Colors.white)),
+              TextSpan(text: 'FOMO', style: TextStyle(color: Colors.orange[200]))
+            ]
+          )),
+        ),
+        backgroundColor: Colors.black,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 20.0, right: 20.0, top: 50.0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25.0),
-                        border: Border.all(
-                          color: Colors.grey,
-                        ),
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: <Widget>[
-                            SizedBox(width: 5.0),
-                            Icon(Icons.search, color: Colors.grey),
-                            SizedBox(width: 5.0),
-                            Text(
-                              'Search',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontFamily: 'Montserrat',
-                                fontSize: 20.0,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10.0),
-                  CircleAvatar(
-                    backgroundColor: Colors.grey,
-                    child: Icon(Icons.filter_list, color: Colors.white),
-                  )
-                ],
-              ),
-            ),
-
-            SizedBox(height: 10.0),
+            SizedBox(height: 30.0),
 
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -72,11 +44,13 @@ class _ExploreState extends State<Explore> {
                     'What\'s hot!',
                     style: TextStyle(
                         color: Colors.black,
-                        fontFamily: 'Montserrat',
+                        fontFamily: 'Bebas',
                         fontSize: 26.0,
                         fontWeight: FontWeight.bold),
                   ),
+
                   Spacer(),
+                  
                   Padding(
                     padding: const EdgeInsets.only(top: 5.0),
                     child: Row(
@@ -85,7 +59,7 @@ class _ExploreState extends State<Explore> {
                           'Show All',
                           style: TextStyle(
                             fontSize: 16.0,
-                            fontFamily: 'Montserrat',
+                            fontFamily: 'Bebas',
                             color: Colors.black,
                           ),
                         ),
@@ -117,7 +91,7 @@ class _ExploreState extends State<Explore> {
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'Montserrat',
+                      fontFamily: 'Bebas',
                       fontSize: 26.0),
                 ),
               ),
@@ -132,12 +106,31 @@ class _ExploreState extends State<Explore> {
               ),
             ),
 
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Your Favourites',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Bebas',
+                      fontSize: 26.0),
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: Container(
+                height: 265.0,
+                child: Fav(),
+              ),
+            ),
           ],
         ),
-        
       ),
     );
   }
 }
-
-

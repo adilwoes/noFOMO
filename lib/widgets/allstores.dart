@@ -1,61 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:nofomo/models/favmodel.dart';
 import 'package:nofomo/models/store.dart';
-import 'package:nofomo/screens/details/details-screen.dart';
-import 'package:provider/provider.dart';
 
-class WhatsHot extends StatefulWidget {
-  _WhatsHotState createState() => _WhatsHotState();
-}
-
-class _WhatsHotState extends State<WhatsHot> {
-  //static final Set<Store> saved = new Set<Store>();
-
-  final listOfStores = <Store>[
+//this will be for the browsing page
+class AllStores extends StatelessWidget {
+  final allStores = <Store>[
     Store(
-      title: 'Adilwoes\'s Pizzeria',
+      title: 'Mario\'s Pasta',
       price: '5.00',
-      img: 'assets/images/pizza.jpg',
+      img: 'assets/images/pasta.jpg',
     ),
     Store(
-      title: 'Jovi\'s Steakhouse',
-      price: '7.00',
-      img: 'assets/images/steak.jpg',
-    ),
-    Store(
-      title: 'Shuen\'s Desserts',
+      title: 'Mario\'s Pasta',
       price: '5.00',
-      img: 'assets/images/waffle.jpg',
+      img: 'assets/images/pasta.jpg',
     ),
-  ];
+    Store(
+      title: 'Mario\'s Pasta',
+      price: '5.00',
+      img: 'assets/images/pasta.jpg',
+    ),
+    Store(
+      title: 'Mario\'s Pasta',
+      price: '5.00',
+      img: 'assets/images/pasta.jpg',
+    ),
+    Store(
+      title: 'Mario\'s Pasta',
+      price: '5.00',
+      img: 'assets/images/pasta.jpg',
+    ),
+    Store(
+      title: 'Mario\'s Pasta',
+      price: '5.00',
+      img: 'assets/images/pasta.jpg',
+    ),
+  ]; //the list should contain all the stores, so must find a way to encapsulate all that data.
 
   @override
   Widget build(BuildContext context) {
-    return buildList(listOfStores, context);
-  }
-
-  Widget buildList(List<Store> storeList, BuildContext context) {
-    var favModel = Provider.of<FavModel>(context);
-    var favStores = favModel.favStores;
-    return Scaffold(
-      backgroundColor: Colors.blueGrey[50],
-      body: ListView(
-          scrollDirection: Axis.horizontal,
-          children: storeList.map<Widget>((Store store) {
-            //final bool alreadySaved = saved.contains(store);
-            return GestureDetector(
-              onTap: () {
-                print('tapped on container');
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return DetailsScreen(store: store);
-                }));
-              },
-              //details page should take in the store right?
+    return ListView(
+        scrollDirection: Axis.vertical,
+        children: allStores.map<Widget>((Store store) {
+          return GestureDetector(
+              onTap: () {}, //ontap need to edit
               child: Padding(
                 padding: EdgeInsets.only(
                     left: 20.0,
                     top: 10.0,
-                    bottom: 30.0), //bottom here changes the length
+                    bottom: 10.0,
+                    right: 20.0), //bottom here changes the length
                 child: Container(
                   width: 300.0,
                   decoration: BoxDecoration(
@@ -80,26 +73,14 @@ class _WhatsHotState extends State<WhatsHot> {
                                     fit: BoxFit.cover)),
                           ),
                           GestureDetector(
-                            onTap: () {                           
-                              setState(() {
-                                if (favStores.contains(store)) {
-                                  favStores.remove(store);
-                                } else {
-                                  favStores.add(store);
-                                }
-                              });
+                            onTap: () {
+                              print('tapped');
                             },
                             child: CircleAvatar(
                               backgroundColor: Colors.grey.withOpacity(0.2),
                               radius: 25.0,
-                              child: Icon(
-                                  favModel.favStores.contains(store)
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: favModel.favStores.contains(store)
-                                      ? Colors.red
-                                      : Colors.white,
-                                  size: 30.0),
+                              child: Icon(Icons.favorite_border,
+                                  color: Colors.white, size: 30.0),
                             ),
                           )
                         ],
@@ -160,14 +141,12 @@ class _WhatsHotState extends State<WhatsHot> {
                             ),
                           ],
                         ),
-                      )
+                      ),
+                      SizedBox(height: 10.0)
                     ],
                   ),
                 ),
-              ),
-            );
-          }).toList()),
-    );
+              ));
+        }).toList());
   }
 }
-//How can i abstract away this whole chunk of code so that i dont have to repeat it twice in whatshot and nearby

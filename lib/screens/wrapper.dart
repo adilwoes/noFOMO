@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nofomo/screens/authenticate/authenticate.dart';
-import 'package:nofomo/screens/home/home.dart';
+import 'package:nofomo/screens/home/homepages/home.dart';
 import 'package:provider/provider.dart';
 import 'package:nofomo/models/user.dart';
 
