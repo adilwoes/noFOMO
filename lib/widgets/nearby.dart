@@ -12,17 +12,17 @@ class _NearByState extends State<NearBy> {
   final listOfStores = <Store>[
     Store(
       title: 'Mario\'s Pasta',
-      price: '5.00',
+      price: 5.00,
       img: 'assets/images/pasta.jpg',
     ),
     Store(
       title: 'Luigi\'s Gelato',
-      price: '7.00',
+      price: 7.00,
       img: 'assets/images/gelato.jpg',
     ),
     Store(
       title: 'Peach\'s Burgers',
-      price: '5.00',
+      price: 5.00,
       img: 'assets/images/burger.jpg',
     ),
   ];
@@ -147,7 +147,7 @@ class _NearByState extends State<NearBy> {
                               ],
                             ),
                             Text(
-                              "\$" + store.price,
+                              "\$" + store.price.toStringAsFixed(2),
                               style: TextStyle(
                                   fontSize: 18.0,
                                   color: Colors.black,

@@ -48,7 +48,7 @@ class Body extends StatelessWidget {
                         ),
                       ]), //possible inkwell for location
                       SizedBox(width: 55.0),
-                      Text("\$" + store.price,
+                      Text("\$" + store.price.toStringAsFixed(2),
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 24.0,
@@ -57,16 +57,20 @@ class Body extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 30.0),
-                  Container(
-                    height: 200.0,
-                    child: Text(
-                      'Details of what is being offered',
-                      style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: Container(
+                      height: 200.0,
+                      child: Text(
+                        store.description,
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold
+                            ),
+                      ),
+                      //description and buttons
                     ),
-                    //description and buttons
                   ),
                   SizedBox(height: 30.0),
                   Container(

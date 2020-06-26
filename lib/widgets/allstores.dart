@@ -1,152 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:nofomo/models/store.dart';
+import 'package:nofomo/scoped_model/main_model.dart';
+import 'package:nofomo/widgets/vert_store_card.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 //this will be for the browsing page
-class AllStores extends StatelessWidget {
-  final allStores = <Store>[
-    Store(
-      title: 'Mario\'s Pasta',
-      price: '5.00',
-      img: 'assets/images/pasta.jpg',
-    ),
-    Store(
-      title: 'Mario\'s Pasta',
-      price: '5.00',
-      img: 'assets/images/pasta.jpg',
-    ),
-    Store(
-      title: 'Mario\'s Pasta',
-      price: '5.00',
-      img: 'assets/images/pasta.jpg',
-    ),
-    Store(
-      title: 'Mario\'s Pasta',
-      price: '5.00',
-      img: 'assets/images/pasta.jpg',
-    ),
-    Store(
-      title: 'Mario\'s Pasta',
-      price: '5.00',
-      img: 'assets/images/pasta.jpg',
-    ),
-    Store(
-      title: 'Mario\'s Pasta',
-      price: '5.00',
-      img: 'assets/images/pasta.jpg',
-    ),
-  ]; //the list should contain all the stores, so must find a way to encapsulate all that data.
+class AllStores extends StatefulWidget {
+  _AllStoresState createState() => _AllStoresState();
+}
+
+class _AllStoresState extends State<AllStores> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-        scrollDirection: Axis.vertical,
-        children: allStores.map<Widget>((Store store) {
-          return GestureDetector(
-              onTap: () {}, //ontap need to edit
-              child: Padding(
-                padding: EdgeInsets.only(
-                    left: 20.0,
-                    top: 10.0,
-                    bottom: 10.0,
-                    right: 20.0), //bottom here changes the length
-                child: Container(
-                  width: 300.0,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.grey[300], width: 1.0),
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Stack(
-                        alignment: Alignment.topRight,
-                        children: <Widget>[
-                          Container(
-                            height: 140.0,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10)),
-                                image: DecorationImage(
-                                    image: AssetImage(store.img),
-                                    fit: BoxFit.cover)),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              print('tapped');
-                            },
-                            child: CircleAvatar(
-                              backgroundColor: Colors.grey.withOpacity(0.2),
-                              radius: 25.0,
-                              child: Icon(Icons.favorite_border,
-                                  color: Colors.white, size: 30.0),
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 15.0,
-                        ),
-                        child: Text(
-                          store.title,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Montserrat'),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                SizedBox(
-                                  width: 5.0,
-                                ),
-                                SizedBox(
-                                  width: 5.0,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Icon(Icons.location_on),
-                                    Text(
-                                      'location (in distance)',
-                                      style: TextStyle(
-                                          //need to find the location, compute distance then input here
-                                          fontSize: 15.0),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            Text(
-                              "\$" + store.price,
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10.0)
-                    ],
-                  ),
-                ),
-              ));
-        }).toList());
+    return Scaffold(
+      body: Container(child: ScopedModelDescendant<MainModel>(
+          builder: (BuildContext context, Widget child, MainModel model) {
+        model.fetchStores();
+        List<Store> stores = model.stores;
+        return ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: model.storeLength,
+            itemBuilder: (BuildContext lctx, int index) {
+              // Store store = stores[index];
+              return Padding(
+                padding: const EdgeInsets.only(right: 20.0, top: 10.0),
+                child: VerticalStoreCard(stores[index], model),
+              );
+            });
+      })),
+    );
   }
 }

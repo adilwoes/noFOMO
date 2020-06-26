@@ -1,36 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:nofomo/scoped_model/main_model.dart';
 import 'package:nofomo/widgets/fav.dart';
+import 'package:nofomo/widgets/hot-stores.dart';
 import 'package:nofomo/widgets/nearby.dart';
-import 'package:nofomo/widgets/whatshot.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class Explore extends StatefulWidget {
-  Explore({Key key}) : super(key: key);
 
-  //final String title;
   @override
   _ExploreState createState() => _ExploreState();
 }
 
 class _ExploreState extends State<Explore> {
+
+  // @override
+  // void initState() {
+  //   widget.storeModel.fetchStores();
+  //   super.initState();
+  // }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueGrey[50],
-      appBar: AppBar(
-        title: Center(
-          child: RichText(text: TextSpan(
-            style: TextStyle(
-              fontSize: 34.0,
-              fontFamily: 'Bebas',
-            ),
-            children: <TextSpan>[
-              TextSpan(text: 'No', style: TextStyle(color: Colors.white)),
-              TextSpan(text: 'FOMO', style: TextStyle(color: Colors.orange[200]))
-            ]
-          )),
-        ),
-        backgroundColor: Colors.black,
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -51,22 +43,22 @@ class _ExploreState extends State<Explore> {
 
                   Spacer(),
                   
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          'Show All',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontFamily: 'Bebas',
-                            color: Colors.black,
-                          ),
-                        ),
-                        Icon(Icons.arrow_right, color: Colors.black)
-                      ],
-                    ),
-                  )
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 5.0),
+                  //   child: Row(
+                  //     children: <Widget>[
+                  //       Text(
+                  //         'Show All',
+                  //         style: TextStyle(
+                  //           fontSize: 16.0,
+                  //           fontFamily: 'Bebas',
+                  //           color: Colors.black,
+                  //         ),
+                  //       ),
+                  //       Icon(Icons.arrow_right, color: Colors.black)
+                  //     ],
+                  //   ),
+                  // )
                 ],
               ),
             ),
@@ -78,7 +70,11 @@ class _ExploreState extends State<Explore> {
               child: Container(
                 height: 265.0,
                 child:
-                    WhatsHot(), //obviously this part would have to be based on location
+                    ScopedModelDescendant<MainModel>(
+                      builder: (BuildContext context, Widget child, MainModel model) {
+                        return HotStores(model: model);
+                      }
+                     )
               ),
             ),
 
