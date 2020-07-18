@@ -3,33 +3,41 @@ import 'package:geolocator/geolocator.dart';
 import 'package:nofomo/models/store.dart';
 import 'package:nofomo/scoped_model/main_model.dart';
 import 'package:nofomo/screens/details/details-screen.dart';
+import 'package:nofomo/widgets/local_push_notification.dart';
 
 class HorizontalStoreCard extends StatefulWidget {
   final Store store;
   final MainModel model;
+  final List<Store> favStores;
 
-  HorizontalStoreCard(this.store, this.model);
+  HorizontalStoreCard(this.store, this.model, this.favStores);
 
   _HorizontalStoreCardState createState() => _HorizontalStoreCardState();
 }
 
 class _HorizontalStoreCardState extends State<HorizontalStoreCard> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-
+  LocalNotification localNotification = LocalNotification();
   Position _currentPosition;
   double _distance;
 
-  void initState() {
-    super.initState();
-    _getCurrentLocation();
-  }
+  // void initState() {
+  //   super.initState();
+  //   // widget.model.fetchStores();
+  //   // widget.model.fetchFavStores();
+  //   _getCurrentLocation().then((position) {
+  //     _currentPosition = position;
+  //   });
+  //   localNotification.initializing();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    _getDistance();
-    widget.model.fetchFavStores();
-    List<Store> favStores =
-        widget.model.favStores; //retrieves the favorited stores in the database
+    // _getDistance();
+    //not due to getting distance
+    print('building horiz card');
+    List<Store> favStores = widget.favStores;
+    // print(favStores.length); 
     return GestureDetector(
         onTap: () => Navigator.push(
             context,
@@ -63,13 +71,23 @@ class _HorizontalStoreCardState extends State<HorizontalStoreCard> {
                               image: AssetImage(widget.store.img), //
                               fit: BoxFit.cover)),
                     ),
+                    // FlatButton(
+                    //   child: Text('notify'),
+                    //   color: Colors.blue,
+                    //   onPressed: localNotification.showNotification,
+                    // ),
                     GestureDetector(
                       onTap: () {
-                        print(favStores.length);
                         favStores
                                 .any((element) => element.id == widget.store.id)
-                            ? widget.model.deleteStore(widget.store.id)
-                            : widget.model.addFavStore(widget.store);
+                            ? {
+                                widget.model.deleteStore(widget.store.id),
+                                favStores.remove(widget.store)
+                              }
+                            : {
+                                widget.model.addFavStore(widget.store),
+                                favStores.add(widget.store)
+                              };
                       },
                       child: CircleAvatar(
                         backgroundColor: Colors.grey.withOpacity(0.2),
@@ -124,11 +142,11 @@ class _HorizontalStoreCardState extends State<HorizontalStoreCard> {
                               Icon(Icons.location_on),
                               if (_distance != null)
                                 Text(
-                                  _distance < 500 ? _distance.toStringAsFixed(0) + 'm' : '>500m',
-                                style: TextStyle(fontSize: 18.0),)
-
-                              // DistanceCalculator(store)
-                              // Text('300m')
+                                  _distance < 500
+                                      ? _distance.toStringAsFixed(0) + 'm'
+                                      : '>500m',
+                                  style: TextStyle(fontSize: 18.0),
+                                )
                             ],
                           )
                         ],
@@ -152,17 +170,18 @@ class _HorizontalStoreCardState extends State<HorizontalStoreCard> {
 
   _getCurrentLocation() async {
     //lat and long
+    var currentPosition;
     try {
-      await geolocator
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-          .then((Position position) {
-        setState(() {
-          _currentPosition = position;
-        });
-      });
+      currentPosition = await geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.best);
+      //   .then((Position position) {
+      // setState(() {
+      //   _currentPosition = position;
+      // });
     } catch (e) {
       print(e);
     }
+    return currentPosition;
   }
 
   _getDistance() async {
@@ -176,6 +195,10 @@ class _HorizontalStoreCardState extends State<HorizontalStoreCard> {
           _distance = distance;
         });
       });
+      print('getting distance');
+      // if (_distance < 500) {
+      //   localNotification.showNotification();
+      // }
     } catch (e) {
       print(e);
     }

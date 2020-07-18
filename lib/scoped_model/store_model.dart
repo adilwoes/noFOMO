@@ -41,7 +41,7 @@ class StoreModel extends Model {
         'long': store.long,
       };
       final http.Response response = await http.post(
-          "https://nofomo2.firebaseio.com/stores.json",
+          "https://nofomo2-fe658.firebaseio.com/stores.json",
           body: json.encode(storeData)); //creating the store in the database
 
       final Map<String, dynamic> responseData = json.decode(response.body);
@@ -53,7 +53,8 @@ class StoreModel extends Model {
           price: store.price,
           img: store.img,
           lat: store.lat,
-          long: store.long); //this returns the store with the ID from firebase
+          long: store.long
+          ); //this returns the store with the ID from firebase
 
       _stores.add(storeWithID);
       _isLoading = false;
@@ -74,7 +75,7 @@ class StoreModel extends Model {
 
     try {
       final http.Response response =
-          await http.get("https://nofomo2.firebaseio.com/stores.json");
+          await http.get("https://nofomo2-fe658.firebaseio.com/stores.json");
 
       final Map<String, dynamic> fetchedData = json.decode(response.body);
 
@@ -117,7 +118,7 @@ class StoreModel extends Model {
         'long': store.long
       };
       final http.Response response = await http.put(
-          "https://nofomo2.firebaseio.com/favStores/${store.id}.json",
+          "https://nofomo2-fe658.firebaseio.com/favStores/${store.id}.json",
           body: json.encode(storeData)); //creating the store in the database
 
       Store storeWithID = Store(
@@ -142,7 +143,7 @@ class StoreModel extends Model {
   Future<bool> fetchFavStores() async {
     try {
       final http.Response response =
-          await http.get("https://nofomo2.firebaseio.com/favStores.json");
+          await http.get("https://nofomo2-fe658.firebaseio.com/favStores.json");
 
       final Map<String, dynamic> fetchedData = json.decode(response.body);
 
@@ -173,7 +174,7 @@ class StoreModel extends Model {
   Future<bool> deleteStore(String storeId) async {
     try {
       final http.Response response = await http
-          .delete("https://nofomo2.firebaseio.com/favStores/${storeId}.json");
+          .delete("https://nofomo2-fe658.firebaseio.com/favStores/${storeId}.json");
 
       // delete item from the list of food items
       _favStores.removeWhere((Store store) => store.id == storeId);

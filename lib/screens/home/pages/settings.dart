@@ -9,18 +9,11 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  Store store = Store(
-      title: 'Mario\'s Pasta',
-      price: 5.00,
-      img: 'assets/images/pasta.jpg',
-      lat: 1.37929,
-      long: 103.939812);
 
   final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Container(
-        // child: DistanceCalculator(store)
         child: Center(
             child: RaisedButton(
                 onPressed: () async {

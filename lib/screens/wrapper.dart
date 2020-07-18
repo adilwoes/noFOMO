@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:nofomo/models/user.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+
 class Wrapper extends StatelessWidget {
   final MainModel mainModel = MainModel();
   @override

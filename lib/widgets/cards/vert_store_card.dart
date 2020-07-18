@@ -4,26 +4,26 @@ import 'package:nofomo/scoped_model/main_model.dart';
 import 'package:nofomo/screens/details/details-screen.dart';
 
 
-class VerticalStoreCard extends StatelessWidget {
+class VerticalStoreCard extends StatefulWidget {
   final Store store;
   final MainModel model;
-  // final String title;
-  // final String description;
-  // final double price;
-  // final String img;
+  final List<Store> favStores;
 
-  VerticalStoreCard(this.store, this.model);
+  VerticalStoreCard(this.store, this.model, this.favStores);
+  _VerticalStoreCardState createState() => _VerticalStoreCardState();
+}
 
+class _VerticalStoreCardState extends State<VerticalStoreCard> {
   @override
   Widget build(BuildContext context) {
-    model.fetchFavStores();
+    print('building vert card');
     List<Store> favStores =
-        model.favStores; //retrieves the favorited stores in the database
+        widget.favStores; //retrieves the favorited stores in the database
     return GestureDetector(
         onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailsScreen(store: store))),
+                builder: (context) => DetailsScreen(store: widget.store))),
         child: Padding(
           padding: EdgeInsets.only(
             left: 20.0,
@@ -48,25 +48,31 @@ class VerticalStoreCard extends StatelessWidget {
                               topLeft: Radius.circular(10),
                               topRight: Radius.circular(10)),
                           image: DecorationImage(
-                              image: AssetImage(store.img), //
+                              image: AssetImage(widget.store.img), //
                               fit: BoxFit.cover)),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        print(favStores.length);
-                        favStores.any((element) => element.id == store.id)
-                            ? model.deleteStore(store.id)
-                            : model.addFavStore(store);
+                       onTap: () {
+                        favStores
+                                .any((element) => element.id == widget.store.id)
+                            ? {
+                                widget.model.deleteStore(widget.store.id),
+                                favStores.remove(widget.store)
+                              }
+                            : {
+                                widget.model.addFavStore(widget.store),
+                                favStores.add(widget.store)
+                              };
                       },
                       child: CircleAvatar(
                         backgroundColor: Colors.grey.withOpacity(0.2),
                         radius: 25.0,
                         child: Icon(
-                          favStores.any((element) => element.id == store.id)
+                          favStores.any((element) => element.id == widget.store.id)
                               ? Icons.favorite
                               : Icons.favorite_border,
                           color:
-                              favStores.any((element) => element.id == store.id)
+                              favStores.any((element) => element.id == widget.store.id)
                                   ? Colors.red
                                   : Colors.white,
                           size: 30.0,
@@ -83,7 +89,7 @@ class VerticalStoreCard extends StatelessWidget {
                     left: 15.0,
                   ),
                   child: Text(
-                    store.title,
+                    widget.store.title,
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 18.0,
@@ -119,7 +125,7 @@ class VerticalStoreCard extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        "\$" + store.price.toStringAsFixed(2),
+                        "\$" + widget.store.price.toStringAsFixed(2),
                         style: TextStyle(
                             fontSize: 18.0,
                             color: Colors.black,
@@ -135,3 +141,4 @@ class VerticalStoreCard extends StatelessWidget {
         ));
   }
 }
+

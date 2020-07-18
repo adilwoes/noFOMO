@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nofomo/models/favmodel.dart';
 import 'package:nofomo/scoped_model/main_model.dart';
-import 'package:nofomo/screens/home/pages/location.dart';
 import 'explore.dart';
 import 'favourites-page.dart';
 import 'browse.dart';
 import 'settings.dart';
-import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   final MainModel model;
@@ -20,45 +17,73 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
 
+  Explore explore;
+  Browse browse;
+  FavouritesPage favouritesPage;
+  Settings settings;
+
+  List<Widget> pages;
+  Widget currentPage;
+
+  void initState() {
+    super.initState();
+    // widget.model.fetchStores();
+    explore = Explore(model: widget.model);
+    browse = Browse(model: widget.model);
+    favouritesPage = FavouritesPage(model: widget.model);
+    settings = Settings();
+    pages = [explore, browse, favouritesPage, settings];
+
+    currentPage = explore;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => FavModel(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Center(
-            child: RichText(
-                text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 34.0,
-                      fontFamily: 'Bebas',
-                    ),
-                    children: <TextSpan>[
-                  TextSpan(text: 'No', style: TextStyle(color: Colors.white)),
-                  TextSpan(
-                      text: 'FOMO', style: TextStyle(color: Colors.orange[200]))
-                ])),
-          ),
-          backgroundColor: Colors.black,
-        ),
-        bottomNavigationBar: botNavBar(),
-        body: IndexedStack(
-          children: <Widget>[
-            Explore(),
-            Browse(),
-            FavouritesPage(),
-            // LocationPage(),
-            Settings(),
-          ],
-          index: _currentIndex,
-        ),
-      ),
-    );
+    // List<Store> stores = widget.model.stores;
+    print('building home');
+    // print('home stores: ' + widget.model.storeLength.toString());
+    return
+        // ChangeNotifierProvider(
+        //   create: (context) => FavModel(),
+        // child:
+        Scaffold(
+            appBar: AppBar(
+              title: Center(
+                child: RichText(
+                    text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 34.0,
+                          fontFamily: 'Bebas',
+                        ),
+                        children: <TextSpan>[
+                      TextSpan(
+                          text: 'No', style: TextStyle(color: Colors.white)),
+                      TextSpan(
+                          text: 'FOMO',
+                          style: TextStyle(color: Colors.orange[200]))
+                    ])),
+              ),
+              backgroundColor: Colors.black,
+            ),
+            bottomNavigationBar: botNavBar(),
+            body: currentPage
+            // IndexedStack(
+            //   children: <Widget>[
+            //     Explore(),
+            //     Browse(),
+            //     FavouritesPage(),
+            //     // LocationPage(),
+            //     Settings(),
+            //   ],
+            //   index: _currentIndex,
+            // ),
+            );
   }
 
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
+      currentPage = pages[index];
     });
   }
 
@@ -112,29 +137,3 @@ class _HomeState extends State<Home> {
   }
 }
 
-// final List<Widget> _children = [
-//   Explore(),
-//   Browse(),
-//   FavouritesPage(),
-//   Settings(),
-// ];
-
-// List<Widget> pages;
-// Explore explore;
-// Browse browse;
-// FavouritesPage favouritesPage;
-// Settings settings;
-// Widget currentPage;
-
-// void initState() {
-//   widget.model.fetchStores();
-
-//   explore = Explore();
-//   browse = Browse();
-//   favouritesPage = FavouritesPage();
-//   settings = Settings();
-//   pages = [explore, browse, favouritesPage, settings];
-
-//   currentPage = explore;
-//   super.initState();
-// }

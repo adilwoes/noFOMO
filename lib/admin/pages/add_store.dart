@@ -65,7 +65,7 @@ class _AddStoreState extends State<AddStore> {
                             MainModel model) {
                           return GestureDetector(
                             onTap: () {
-                              onSubmit(model.addFavStore);
+                              onSubmit(model.addStore);
                               if (model.isLoading) {
                                 showLoadingIndicator();
                               }
