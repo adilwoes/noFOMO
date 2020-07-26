@@ -3,20 +3,21 @@ import 'package:nofomo/models/userdata.dart';
 
 class DatabaseService {
   final String uid;
-  DatabaseService({ this.uid });
+  DatabaseService({this.uid});
 
   //collection reference
   final CollectionReference userCollection =
       Firestore.instance.collection('user data');
 
-  Future updateUserData(String name, String email) async { //when users register and when they update in settings
-    return await userCollection.document(uid).setData({ //creates the document and links the user to it
+  Future updateUserData(String name, String email) async {
+    //when users register and when they update in settings
+    return await userCollection.document(uid).setData({
+      //creates the document and links the user to it
       'name': name,
       //'phoneNumber': phoneNumber,
       'email': email,
     });
   }
-  //might have to put this part in settings instead of home screen
 
   // userData list from snapshot
   List<UserData> _userDataListFromSnapshot(QuerySnapshot snapshot) {
@@ -31,7 +32,6 @@ class DatabaseService {
 
   //get userData stream
   Stream<List<UserData>> get userData {
-    return userCollection.snapshots()
-      .map(_userDataListFromSnapshot);
+    return userCollection.snapshots().map(_userDataListFromSnapshot);
   }
 }

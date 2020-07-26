@@ -8,7 +8,7 @@ class Loading extends StatelessWidget {
       color: Colors.white,
       child: Center(
         child: SpinKitChasingDots(
-          color: Colors.lightBlueAccent,
+          color: Colors.orange[200],
           size: 50.0,
         ),
       ),
