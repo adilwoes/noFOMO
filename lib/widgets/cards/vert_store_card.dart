@@ -3,17 +3,19 @@ import 'package:nofomo/models/store.dart';
 import 'package:nofomo/scoped_model/main_model.dart';
 import 'package:nofomo/screens/details/details-screen.dart';
 
-
 class VerticalStoreCard extends StatefulWidget {
   final Store store;
   final MainModel model;
   final List<Store> favStores;
+  // final List<Store> nearStores;
 
   VerticalStoreCard(this.store, this.model, this.favStores);
   _VerticalStoreCardState createState() => _VerticalStoreCardState();
 }
 
 class _VerticalStoreCardState extends State<VerticalStoreCard> {
+  double _distance;
+
   @override
   Widget build(BuildContext context) {
     print('building vert card');
@@ -27,7 +29,7 @@ class _VerticalStoreCardState extends State<VerticalStoreCard> {
         child: Padding(
           padding: EdgeInsets.only(
             left: 20.0,
-          ), //bottom here changes the length
+          ),
           child: Container(
             width: 300.0,
             decoration: BoxDecoration(
@@ -52,7 +54,7 @@ class _VerticalStoreCardState extends State<VerticalStoreCard> {
                               fit: BoxFit.cover)),
                     ),
                     GestureDetector(
-                       onTap: () {
+                      onTap: () {
                         favStores
                                 .any((element) => element.id == widget.store.id)
                             ? {
@@ -68,13 +70,14 @@ class _VerticalStoreCardState extends State<VerticalStoreCard> {
                         backgroundColor: Colors.grey.withOpacity(0.2),
                         radius: 25.0,
                         child: Icon(
-                          favStores.any((element) => element.id == widget.store.id)
+                          favStores.any(
+                                  (element) => element.id == widget.store.id)
                               ? Icons.favorite
                               : Icons.favorite_border,
-                          color:
-                              favStores.any((element) => element.id == widget.store.id)
-                                  ? Colors.red
-                                  : Colors.white,
+                          color: favStores.any(
+                                  (element) => element.id == widget.store.id)
+                              ? Colors.red
+                              : Colors.white,
                           size: 30.0,
                         ),
                       ),
@@ -118,8 +121,16 @@ class _VerticalStoreCardState extends State<VerticalStoreCard> {
                           Row(
                             children: <Widget>[
                               Icon(Icons.location_on),
-                              Text('300m')
-                              // DistanceCalculator(store) //error to be fixed
+                              if (_distance != null)
+                                Text(
+                                  _distance.toStringAsFixed(0) + 'm',
+                                  style: TextStyle(fontSize: 18.0),
+                                )
+                              else
+                                Text(
+                                  widget.store.distance.toString() + 'm',
+                                  style: TextStyle(fontSize: 18.0),
+                                )
                             ],
                           )
                         ],
@@ -141,4 +152,3 @@ class _VerticalStoreCardState extends State<VerticalStoreCard> {
         ));
   }
 }
-

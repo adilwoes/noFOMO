@@ -13,9 +13,8 @@ class Browse extends StatefulWidget {
 }
 
 class _BrowseState extends State<Browse> {
-
-  List<Store> stores;
   List<Store> favStores;
+  List<Store> allStores;
 
   // @override
   // void initState() {
@@ -23,18 +22,17 @@ class _BrowseState extends State<Browse> {
   //   widget.model.fetchFavStores();
   //   super.initState();
   // }
-  
+
   @override
   Widget build(BuildContext context) {
-    stores = widget.model.stores;
     favStores = widget.model.favStores;
+    allStores = widget.model.allStores;
     print("building browse");
-    print('browse: ' + stores.length.toString());
-    print('browse: ' + favStores.length.toString());
     return Scaffold(
-      backgroundColor: Colors.blueGrey[50],
-      body: AllStores(stores: stores, favStores: favStores,)
-    );
+        backgroundColor: Colors.blueGrey[50],
+        body: AllStores(
+          allStores: allStores,
+          favStores: favStores,
+        ));
   }
 }
-

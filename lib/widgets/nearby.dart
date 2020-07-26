@@ -14,16 +14,19 @@ class _NearByState extends State<NearBy> {
       title: 'Mario\'s Pasta',
       price: 5.00,
       img: 'assets/images/pasta.jpg',
+      distance: 158,
     ),
     Store(
       title: 'Luigi\'s Gelato',
       price: 7.00,
       img: 'assets/images/gelato.jpg',
+      distance: 217,
     ),
     Store(
       title: 'Peach\'s Burgers',
       price: 5.00,
       img: 'assets/images/burger.jpg',
+      distance: 325,
     ),
   ];
   @override
@@ -137,10 +140,10 @@ class _NearByState extends State<NearBy> {
                                   children: <Widget>[
                                     Icon(Icons.location_on),
                                     Text(
-                                      'location (in distance)',
+                                      store.distance.toString() + "m",
                                       style: TextStyle(
                                           //need to find the location, compute distance then input here
-                                          fontSize: 15.0),
+                                          fontSize: 18.0),
                                     ),
                                   ],
                                 )

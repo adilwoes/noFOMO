@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nofomo/models/favmodel.dart';
 import 'package:nofomo/models/store.dart';
-import 'package:nofomo/scoped_model/main_model.dart';
 import 'package:nofomo/screens/details/details-screen.dart';
 import 'package:provider/provider.dart';
 
 class WhatsHot extends StatefulWidget {
-  final MainModel model;
-  WhatsHot(this.model);
+  // final MainModel model;
+  // WhatsHot(this.model);
 
   _WhatsHotState createState() => _WhatsHotState();
 }
@@ -157,30 +156,30 @@ class _WhatsHotState extends State<WhatsHot> {
     );
   }
 
-  GestureDetector favButton(List<Store> favStores, Store store, FavModel favModel) {
+  GestureDetector favButton(
+      List<Store> favStores, Store store, FavModel favModel) {
     return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (favStores.contains(store)) {
-                      favStores.remove(store);
-                    } else {
-                      favStores.add(store);
-                    }
-                  });
-                },
-                child: CircleAvatar(
-                  backgroundColor: Colors.grey.withOpacity(0.2),
-                  radius: 25.0,
-                  child: Icon(
-                      favModel.favStores.contains(store)
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      color: favModel.favStores.contains(store)
-                          ? Colors.red
-                          : Colors.white,
-                      size: 30.0),
-                ),
-              );
+      onTap: () {
+        setState(() {
+          if (favStores.contains(store)) {
+            favStores.remove(store);
+          } else {
+            favStores.add(store);
+          }
+        });
+      },
+      child: CircleAvatar(
+        backgroundColor: Colors.grey.withOpacity(0.2),
+        radius: 25.0,
+        child: Icon(
+            favModel.favStores.contains(store)
+                ? Icons.favorite
+                : Icons.favorite_border,
+            color:
+                favModel.favStores.contains(store) ? Colors.red : Colors.white,
+            size: 30.0),
+      ),
+    );
   }
 }
 //How can i abstract away this whole chunk of code so that i dont have to repeat it twice in whatshot and nearby

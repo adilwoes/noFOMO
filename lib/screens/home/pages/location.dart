@@ -9,7 +9,7 @@ class LocationPage extends StatefulWidget {
   final MainModel model;
 
   LocationPage(this.store, this.model);
-  
+
   @override
   _LocationPageState createState() => _LocationPageState();
 }
@@ -29,8 +29,7 @@ class _LocationPageState extends State<LocationPage> {
   Widget build(BuildContext context) {
     _getDistance();
     widget.model.fetchFavStores();
-    List<Store> favStores =
-        widget.model.favStores;
+    List<Store> favStores = widget.model.favStores;
     return GestureDetector(
         onTap: () => Navigator.push(
             context,
@@ -67,7 +66,8 @@ class _LocationPageState extends State<LocationPage> {
                     GestureDetector(
                       onTap: () {
                         print(favStores.length);
-                        favStores.any((element) => element.id == widget.store.id)
+                        favStores
+                                .any((element) => element.id == widget.store.id)
                             ? widget.model.deleteStore(widget.store.id)
                             : widget.model.addFavStore(widget.store);
                       },
@@ -75,13 +75,14 @@ class _LocationPageState extends State<LocationPage> {
                         backgroundColor: Colors.grey.withOpacity(0.2),
                         radius: 25.0,
                         child: Icon(
-                          favStores.any((element) => element.id == widget.store.id)
+                          favStores.any(
+                                  (element) => element.id == widget.store.id)
                               ? Icons.favorite
                               : Icons.favorite_border,
-                          color:
-                              favStores.any((element) => element.id == widget.store.id)
-                                  ? Colors.red
-                                  : Colors.white,
+                          color: favStores.any(
+                                  (element) => element.id == widget.store.id)
+                              ? Colors.red
+                              : Colors.white,
                           size: 30.0,
                         ),
                       ),
@@ -121,7 +122,8 @@ class _LocationPageState extends State<LocationPage> {
                           Row(
                             children: <Widget>[
                               Icon(Icons.location_on),
-                              if (_distance != null) Text(_distance.toStringAsFixed(0) + 'm')
+                              if (_distance != null)
+                                Text(_distance.toStringAsFixed(0) + 'm')
                               // DistanceCalculator(store)
                               // Text('300m')
                             ],

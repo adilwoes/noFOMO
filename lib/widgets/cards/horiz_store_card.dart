@@ -9,8 +9,9 @@ class HorizontalStoreCard extends StatefulWidget {
   final Store store;
   final MainModel model;
   final List<Store> favStores;
+  final Position position;
 
-  HorizontalStoreCard(this.store, this.model, this.favStores);
+  HorizontalStoreCard(this.store, this.model, this.favStores, this.position);
 
   _HorizontalStoreCardState createState() => _HorizontalStoreCardState();
 }
@@ -18,26 +19,19 @@ class HorizontalStoreCard extends StatefulWidget {
 class _HorizontalStoreCardState extends State<HorizontalStoreCard> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   LocalNotification localNotification = LocalNotification();
-  Position _currentPosition;
+  // Position _currentPosition;
   double _distance;
 
-  // void initState() {
-  //   super.initState();
-  //   // widget.model.fetchStores();
-  //   // widget.model.fetchFavStores();
-  //   _getCurrentLocation().then((position) {
-  //     _currentPosition = position;
-  //   });
-  //   localNotification.initializing();
-  // }
+  void initState() {
+    super.initState();
+    localNotification.initializing();
+    _getDistance();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // _getDistance();
-    //not due to getting distance
     print('building horiz card');
     List<Store> favStores = widget.favStores;
-    // print(favStores.length); 
     return GestureDetector(
         onTap: () => Navigator.push(
             context,
@@ -45,9 +39,9 @@ class _HorizontalStoreCardState extends State<HorizontalStoreCard> {
                 builder: (context) => DetailsScreen(store: widget.store))),
         child: Padding(
           padding: EdgeInsets.only(
-              left: 20.0,
-              top: 10.0,
-              bottom: 30.0), //bottom here changes the length
+            left: 20.0,
+            top: 10.0,
+          ),
           child: Container(
             width: 300.0,
             decoration: BoxDecoration(
@@ -86,7 +80,7 @@ class _HorizontalStoreCardState extends State<HorizontalStoreCard> {
                               }
                             : {
                                 widget.model.addFavStore(widget.store),
-                                favStores.add(widget.store)
+                                widget.favStores.add(widget.store)
                               };
                       },
                       child: CircleAvatar(
@@ -142,9 +136,12 @@ class _HorizontalStoreCardState extends State<HorizontalStoreCard> {
                               Icon(Icons.location_on),
                               if (_distance != null)
                                 Text(
-                                  _distance < 500
-                                      ? _distance.toStringAsFixed(0) + 'm'
-                                      : '>500m',
+                                  _distance.toStringAsFixed(0) + 'm',
+                                  style: TextStyle(fontSize: 18.0),
+                                )
+                              else
+                                Text(
+                                  widget.store.distance.toString() + 'm',
                                   style: TextStyle(fontSize: 18.0),
                                 )
                             ],
@@ -168,37 +165,20 @@ class _HorizontalStoreCardState extends State<HorizontalStoreCard> {
         ));
   }
 
-  _getCurrentLocation() async {
-    //lat and long
-    var currentPosition;
-    try {
-      currentPosition = await geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.best);
-      //   .then((Position position) {
-      // setState(() {
-      //   _currentPosition = position;
-      // });
-    } catch (e) {
-      print(e);
-    }
-    return currentPosition;
-  }
-
   _getDistance() async {
     //lat and long
     try {
       await geolocator
-          .distanceBetween(_currentPosition.latitude,
-              _currentPosition.longitude, widget.store.lat, widget.store.long)
+          .distanceBetween(widget.position.latitude, widget.position.longitude,
+              widget.store.lat, widget.store.long)
           .then((double distance) {
         setState(() {
           _distance = distance;
         });
       });
-      print('getting distance');
-      // if (_distance < 500) {
-      //   localNotification.showNotification();
-      // }
+      if (_distance < 500) {
+        localNotification.showNotification();
+      }
     } catch (e) {
       print(e);
     }

@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:nofomo/models/user.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-
 class Wrapper extends StatelessWidget {
   final MainModel mainModel = MainModel();
   @override
@@ -19,11 +18,9 @@ class Wrapper extends StatelessWidget {
     } else {
       return ScopedModel<MainModel>(
         model: mainModel,
-        child: 
-        Home(model: mainModel),
-        // AddStore()//
+        child: Home(model: mainModel),
+        // AddStore()
       );
-      // AddStore(); //Home()
     }
   }
 }

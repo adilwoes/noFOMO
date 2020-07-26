@@ -60,7 +60,7 @@ class _SignInState extends State<SignIn> {
                           style: TextStyle(
                             fontSize: 110.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.lightBlue,
+                            color: Colors.orange[200],
                           ),
                         ),
                       )
@@ -122,7 +122,7 @@ class _SignInState extends State<SignIn> {
                             child: Text(
                               'Forgot Password',
                               style: TextStyle(
-                                color: Colors.lightBlue,
+                                color: Colors.orange[200],
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Montserrat',
                                 decoration: TextDecoration.underline,
@@ -135,8 +135,8 @@ class _SignInState extends State<SignIn> {
                           height: 55.0,
                           child: Material(
                             borderRadius: BorderRadius.circular(20.0),
-                            shadowColor: Colors.lightBlueAccent,
-                            color: Colors.lightBlue,
+                            shadowColor: Colors.orangeAccent,
+                            color: Colors.orange[300],
                             elevation: 7.0,
                             child: GestureDetector(
                               child: Center(
@@ -208,7 +208,7 @@ class _SignInState extends State<SignIn> {
                       child: Text(
                         'Register',
                         style: TextStyle(
-                          color: Colors.lightBlue,
+                          color: Colors.orange[200],
                           fontSize: 15.0,
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
